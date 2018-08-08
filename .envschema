@@ -1,0 +1,4 @@
+DB_TECHNO=mongodb
+DB_HOST=terrarium
+DB_PORT=27017
+DB=terrarium
