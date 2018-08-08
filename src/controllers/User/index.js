@@ -17,7 +17,7 @@ class UserController {
             const newUser = new User(req.body);
 
             User.register(newUser, password, (err, newRegistredUser) => {
-                if (err) return next(err);
+                if (err) return res.send(err);
                 // TODO envoyer email de confirmation d'inscription
                 // const authenticate = User.authenticate();
                 // authenticate('username', 'password', function(err, result) {
