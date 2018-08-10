@@ -2,6 +2,10 @@ import passport from 'passport';
 
 class AuthenticationController {
 
+    static simulateConnectionForm(req, res, next) {
+        next();
+    }
+
     static login(req, res, next) {
         passport.authenticate('local', function (err, user, info) {
             if (err) {
