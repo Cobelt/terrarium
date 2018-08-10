@@ -47,8 +47,8 @@ class UserController {
     }
 
     static get (req, res, next) {
-        if(req.session.userId) {
-            User.findOne({"_id": req.userId}, (err, user) => {
+        if(req.params.userId) {
+            User.findOne({"_id": req.params.userId}, (err, user) => {
                 req.user = user;
                 next(err)
             });
