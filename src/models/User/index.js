@@ -12,16 +12,13 @@ const UserSchema = Schema ({
 
     safetyCode: {
         type: Number,
-        select: false,
     },
 
     salt: { // Password (1/2)
         type: String,
-        select: false,
     },
     hash: { // Password (2/2)
         type: String,
-        select: false,
     },
 
     email: {

@@ -2,7 +2,7 @@
   "name": "terrarium",
   "version": "0.0.1",
   "description": "database",
-  "main": "index.js",
+  "main": "server.js",
   "author": "cobelt",
   "license": "ISC",
   "private": true,
@@ -29,7 +29,7 @@
     "nodemon": "^1.18.3"
   },
   "scripts": {
-    "start": "nodemon --exec yarn babel-node -- ./index.js",
+    "start": "nodemon --exec yarn babel-node -- ./server.js",
     "babel-node": "babel-node --presets=env",
     "build": "babel src -d dist"
   }

@@ -42,7 +42,7 @@ class UserController {
                 userMap[user._id] = user;
             });
 
-            res.send(userMap);
+            req.user = userMap;
         });
     }
 
