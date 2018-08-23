@@ -22,9 +22,9 @@ class AuthenticationController {
                     req.session.typeVisitor = 'User';
                     req.session.userId = user.id;
                     res.send({
+                        message: "You have been successfully logged in.",
                         isAuthenticated: req.isAuthenticated(),
-                        isAdmin: true, // TODO
-                        message: "You have been successfully logged in."
+                        isAdmin: false,
                     });
                 }
             });
@@ -41,17 +41,17 @@ class AuthenticationController {
             }
             res.clearCookie('connect.sid');
             res.send({
+                message: "You have been successfully logged out.",
                 isAuthenticated: isAuthenticated,
-                isAdmin: false, // TODO, même si ça devrait toujours retourner false ici.
-                message: "You have been successfully logged out."
+                isAdmin: false,
             });
         });
     }
 
     static getSessionInfos(req, res, next) {
         res.send({
-            message: req.session ? "Session already open" : "Session opened",
-            isAuthenticated: !!req.user,
+            message: req.session.visited.length > 2 ? "Session already open" : "Session opened",
+            isAuthenticated: req.isAuthenticated(),
             isAdmin: true // TODO
         });
     }

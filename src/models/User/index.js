@@ -1,5 +1,7 @@
 import passportLocalMongoose from 'passport-local-mongoose';
 import mongoose from 'mongoose';
+import moment from 'moment';
+
 const Schema = mongoose.Schema;
 
 const UserSchema = Schema ({
@@ -16,14 +18,15 @@ const UserSchema = Schema ({
 
     salt: { // Password (1/2)
         type: String,
+        required: true,
     },
     hash: { // Password (2/2)
         type: String,
+        required: true,
     },
 
     email: {
         type: String,
-        unique: true,
     },
 
     firstname: {
@@ -42,7 +45,6 @@ const UserSchema = Schema ({
 
     lang: {
         type: String,
-        required: true,
         default: 'fr',
     },
 
@@ -55,13 +57,8 @@ const UserSchema = Schema ({
         default: 0,
     },
 
-    birth: {
-        date: {
-            type: Date,
-        },
-        place: {
-            type: String,
-        }
+    birthdate: {
+        type: Date,
     },
 
     ip: {
@@ -75,7 +72,7 @@ const UserSchema = Schema ({
 
     creationDate: {
         type: Date,
-        default: Date.now(),
+        default: moment(),
     }
 });
 

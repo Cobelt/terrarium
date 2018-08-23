@@ -29,10 +29,10 @@ const mongoDBOptions = {
     family: 4 // Use IPv4, skip trying IPv6
 };
 
-const mongoDBAddress = `${process.env.MONGODB_URL}:${process.env.MONGODB_PORT}` || 'terrarium:27017';
+const mongoDBAddress = `${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}` || 'terrarium:27017';
 const mongoDBName = process.env.MONGODB_NAME || 'terrarium';
 
-const sessionSecretKey = process.env.SESSION_SECRET_KEY;
+const sessionSecretKey = process.env.SESSION_SECRET_KEY || 'co123be456lt789di!$erk?';
 if (!sessionSecretKey) {
     log.error("Environment variable SESSION_SECRET_KEY is not defined.");
     process.exit(1);
@@ -77,8 +77,6 @@ mongoose.connection.once('open', () => {
     Authentication.initializePassportAuthentication(app);
 
     app.use('*', (req, res, next) => {
-        console.log(`[${req.user ? 'User' : 'Lead/Visitor'}] Language: ${req.locale}, Session: "${req.sessionID}", FingerPrint: "${req.fingerprint.hash}"`);
-
         const newVisit = {
             date: new Date(),
             page: req.baseUrl
@@ -93,10 +91,12 @@ mongoose.connection.once('open', () => {
         else
             req.session.visited = [newVisit];
 
+        console.log(`[${req.session.typeVisitor}] Session: "${req.sessionID}", Lang: ${req.session.lang}, FingerPrint: "${req.session.fingerprint.hash}", Visits: ${req.session.visited.length}`);
         next();
     });
 
     app.use('/', routes);
+
     app.use(express.static('./public'));
 
     app.use(function (req, res, next) {
@@ -107,7 +107,7 @@ mongoose.connection.once('open', () => {
 
     app.listen(port, () => {
         console.log(`Listening on port ${port}.`);
-        console.log(`Environnement : ${app.get('env')}`);
+        console.log(`Environment : ${app.get('env')}`);
         console.log(`Database URL : ${mongoDbURI}`);
         console.log(`Sessions are stored for ${ (sessionMaxAge/60000)>60 ? `${sessionMaxAge/60000/60} hours` : `${sessionMaxAge/60000} minutes`}`);
     })
